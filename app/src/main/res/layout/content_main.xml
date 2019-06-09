@@ -24,14 +24,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_content"/>
+        app:layout_constraintTop_toBottomOf="@+id/search_content"
+        android:onClick="onClickSearch"/>
 
     <TextView
         android:id="@+id/search_result"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_marginTop="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_search" />
