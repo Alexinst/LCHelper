@@ -15,6 +15,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOError;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,11 +44,33 @@ public class MainActivity extends AppCompatActivity
     }
     
     public void onClickSearch(View view) {
+        TextView searchContent = (TextView) findViewById(R.id.search_content);
+        String searchCmd = searchContent.getText().toString().toLowerCase();
+        String filename = "command/" + searchCmd + ".md";
+        StringBuilder text = new StringBuilder();
+        File cmdFile = new File(filename);
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(cmdFile));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+            br.close();
+        }
+        catch (IOException e) {
+            text.append("File not found.");
+        }
+
         TextView searchResult = (TextView) findViewById(R.id.search_result);
-        String manual = "Here are the manuals of the command.";
-        searchResult.setText(manual);
+        searchResult.setText(text.toString());
     }
-    
+
+    private void parseJSON(String filename) {
+
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
