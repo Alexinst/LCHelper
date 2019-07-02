@@ -1,5 +1,6 @@
 package com.t4f.lc_helper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity
@@ -42,33 +45,14 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
-    
+
     public void onClickSearch(View view) {
-        TextView searchContent = (TextView) findViewById(R.id.search_content);
-        String searchCmd = searchContent.getText().toString().toLowerCase();
-        String filename = "command/" + searchCmd + ".md";
-        StringBuilder text = new StringBuilder();
-        File cmdFile = new File(filename);
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(cmdFile));
-            String line;
+        TextView searchBox = (TextView) findViewById(R.id.search_box);
+        String cmd = searchBox.getText().toString().toLowerCase();
 
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-            br.close();
-        }
-        catch (IOException e) {
-            text.append("File not found.");
-        }
-
-        TextView searchResult = (TextView) findViewById(R.id.search_result);
-        searchResult.setText(text.toString());
-    }
-
-    private void parseJSON(String filename) {
-
+        Intent intent = new Intent(this, SearchResultActivity.class);
+        intent.putExtra("cmd", cmd);
+        startActivity(intent);
     }
 
     @Override
