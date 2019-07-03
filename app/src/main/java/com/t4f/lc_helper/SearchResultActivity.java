@@ -3,15 +3,12 @@ package com.t4f.lc_helper;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.webkit.WebView;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -27,9 +24,7 @@ public class SearchResultActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String cmd = intent.getStringExtra("cmd");
         String filename = String.format("commands/%s.md", cmd);
-        String html = renderMarkdown(filename);
-
-        TextView searchResult = (TextView) findViewById(R.id.search_result);
+        renderMarkdown(filename);
     }
 
 //    private String readText(InputStream is) throws Exception {
@@ -44,7 +39,7 @@ public class SearchResultActivity extends AppCompatActivity {
 //        return sb.toString();
 //    }
 
-    private String renderMarkdown(String filename) {
+    private void renderMarkdown(String filename) {
         try {
             InputStream in = getResources().getAssets().open(filename);
             InputStreamReader reader = new InputStreamReader(in);
@@ -52,11 +47,13 @@ public class SearchResultActivity extends AppCompatActivity {
             Node doc = parser.parseReader(reader);
             HtmlRenderer render = HtmlRenderer.builder().build();
 
+            WebView contentBox = (WebView) findViewById(R.id.wv_content);
+            contentBox.loadData(render.render(doc), "text/html; charset=UTF-8", null);
+            contentBox.setVisibility(View.VISIBLE);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "";
     }
 }
