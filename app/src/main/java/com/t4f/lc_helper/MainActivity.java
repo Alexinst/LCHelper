@@ -2,10 +2,10 @@ package com.t4f.lc_helper;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.JsonReader;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,16 +19,11 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +44,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // TODO:创建前缀树，储存所有指令名
-        String cmdFiles = "data.json";
+        String dataFiles = "data.json";
+
 
         // TODO:监听EditText
         EditText inputBox = (EditText) findViewById(R.id.input_box);
