@@ -29,7 +29,7 @@
 
         android:onClick="onClickSearch"
         android:text="@string/search"
-        app:layout_constraintLeft_toRightOf="@id/search_box"
+        app:layout_constraintLeft_toRightOf="@id/input_box"
         app:layout_constraintTop_toTopOf="parent" />
 
 

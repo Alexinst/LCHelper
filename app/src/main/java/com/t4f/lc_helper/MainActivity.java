@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -48,24 +49,35 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // TODO:创建前缀树，储存所有指令名
+        String cmdFiles = "data.json";
 
         // TODO:监听EditText
         EditText inputBox = (EditText) findViewById(R.id.input_box);
-//        inputBox.addTextChangedListener(new TextWatcher() {
-//            private CharSequence temp;
-//            private int selectionStart;
-//            private int selectionEnd;
-//
-//            @Override
-//                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//             public void beforeTextChanged(CharSequence s, int start, int count,int after) {
-//            }
-//
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
+        inputBox.addTextChangedListener(new TextWatcher() {
+            private CharSequence temp;
+            private int selectionStart;
+            private int selectionEnd;
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                StringBuilder str = new StringBuilder();
+                for (int i = 0; i < s.length(); i++) {
+                    char c = s.charAt(i);
+                    if (c - 'a' >= 0 && c - 'a' < 26)
+                        str.append(c);
+                }
+
+            // Top K algorithm
+            }
+        });
     }
 
     public void onClickSearch(View view) {
