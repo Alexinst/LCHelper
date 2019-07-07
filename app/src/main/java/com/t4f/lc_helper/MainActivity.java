@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.TextWatcher;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -44,10 +46,30 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        // TODO:创建前缀树，储存所有指令名
+
+        // TODO:监听EditText
+        EditText inputBox = (EditText) findViewById(R.id.input_box);
+//        inputBox.addTextChangedListener(new TextWatcher() {
+//            private CharSequence temp;
+//            private int selectionStart;
+//            private int selectionEnd;
+//
+//            @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//             public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+//            }
+//
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
     }
 
     public void onClickSearch(View view) {
-        TextView searchBox = (TextView) findViewById(R.id.search_box);
+        TextView searchBox = (TextView) findViewById(R.id.input_box);
         String cmd = searchBox.getText().toString().toLowerCase();
 
         Intent intent = new Intent(this, SearchResultActivity.class);
