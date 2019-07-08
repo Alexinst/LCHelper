@@ -1,50 +1,27 @@
-package com.t4f.lc_helper;
+package com.t4f.lc_helper.data;
 
-import android.util.JsonReader;
+import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-class Info {
-    private String name;
-    private String p;
-    private String intro;
 
-    public Info(String name, String p, String intro) {
-        this.name = name;
-        this.p = p;
-        this.intro = intro;
-    }
+public class JsonDataReader {
 
-    public String getName() {
-        return this.name;
-    }
-
-    public String getP() {
-        return this.p;
-    }
-
-    public String getIntro() {
-        return this.intro;
-    }
-}
-
-class CmdDataReader {
     public List<Info> readJsonStream(InputStream in) throws IOException {
-        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         try {
-            return readCmdInfoArray(reader);
+            return readCmdInfoArray(jsonReader);
         }
         finally {
-            reader.close();
+            jsonReader.close();
         }
     }
 
-    private List<Info> readCmdInfoArray(JsonReader reader) throws IOException{
+    public List<Info> readCmdInfoArray(JsonReader reader) throws IOException{
         List<Info> infos = new ArrayList<>();
 
         reader.beginArray();
@@ -55,15 +32,15 @@ class CmdDataReader {
         return infos;
     }
 
-    private Info readInfo(JsonReader reader) throws IOException {
+    public Info readInfo(JsonReader reader) throws IOException {
         String cmdName = null;
         String p = null;
         String intro = null;
 
         reader.beginObject();
         while (reader.hasNext()) {
-            String name = reader.nextName();
-            switch (name) {
+            String tag = reader.nextName();
+            switch (tag) {
                 case "n": cmdName = reader.nextString(); break;
                 case "p": p = reader.nextString(); break;
                 case "d": intro = reader.nextString(); break;

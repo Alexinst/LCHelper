@@ -1,10 +1,12 @@
-package com.t4f.lc_helper;
+package com.t4f.lc_helper.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+
+import com.t4f.lc_helper.R;
 
 import java.io.IOException;
 import java.io.InputStream;

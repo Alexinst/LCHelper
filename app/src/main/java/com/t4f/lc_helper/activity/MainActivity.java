@@ -1,11 +1,9 @@
-package com.t4f.lc_helper;
+package com.t4f.lc_helper.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.JsonReader;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,10 +17,12 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.t4f.lc_helper.data.Info;
+import com.t4f.lc_helper.data.JsonDataReader;
+import com.t4f.lc_helper.R;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -43,8 +43,20 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        // TODO:创建前缀树，储存所有指令名
-        String dataFiles = "data.json";
+        // 读取data.json
+        String dataFiles = "CmdInfo.json";
+        JsonDataReader dataReader = new JsonDataReader();
+        List<Info> cmdLists = null;
+        try {
+            InputStream in = getResources().getAssets().open(dataFiles);
+            cmdLists = dataReader.readJsonStream(in);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // TODO: 创建前缀树，储存所有指令名
+
 
 
         // TODO:监听EditText
@@ -67,7 +79,10 @@ public class MainActivity extends AppCompatActivity
                 StringBuilder str = new StringBuilder();
                 for (int i = 0; i < s.length(); i++) {
                     char c = s.charAt(i);
-                    if (c - 'a' >= 0 && c - 'a' < 26)
+                    if (   (c - 'a' >= 0 && c - 'a' < 26)
+                        || (c - '0' >= 0 && c - '0' < 10)
+                        || c == '-'
+                        || c == '_')
                         str.append(c);
                 }
 
