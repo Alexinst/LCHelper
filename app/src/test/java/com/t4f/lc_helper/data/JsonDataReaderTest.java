@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -23,7 +24,7 @@ public class JsonDataReaderTest {
         test.add(new Info("ack","/ack","比grep好用的文本搜索工具"));
 
         String filename = "e:/Projects/data4test.json";
-        List<Info> cmdLists = null;
+        Map<String, Info> cmdLists = null;
         try {
             InputStream in = new FileInputStream(filename);
             cmdLists = reader.readJsonStream(in);

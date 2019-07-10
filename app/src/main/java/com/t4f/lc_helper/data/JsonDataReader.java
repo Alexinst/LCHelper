@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class JsonDataReader {
 
-    public List<Info> readJsonStream(InputStream in) throws IOException {
+    public Map<String, Info> readJsonStream(InputStream in) throws IOException {
         JsonReader jsonReader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         try {
             return readCmdInfoArray(jsonReader);
@@ -21,12 +23,14 @@ public class JsonDataReader {
         }
     }
 
-    public List<Info> readCmdInfoArray(JsonReader reader) throws IOException{
-        List<Info> infos = new ArrayList<>();
+    public Map<String, Info> readCmdInfoArray(JsonReader reader) throws IOException{
+        Map<String, Info> infos = new HashMap<>();
 
         reader.beginArray();
-        while (reader.hasNext())
-            infos.add(readInfo(reader));
+        while (reader.hasNext()) {
+            Info info = readInfo(reader);
+            infos.put(info.getName(), info);
+        }
         reader.endArray();
 
         return infos;

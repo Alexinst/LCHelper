@@ -8,6 +8,7 @@ import android.webkit.WebView;
 
 import com.t4f.lc_helper.R;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,18 +30,6 @@ public class SearchResultActivity extends AppCompatActivity {
         renderMarkdown(filename);
     }
 
-//    private String readText(InputStream is) throws Exception {
-//        InputStreamReader reader = new InputStreamReader(is);
-//        BufferedReader bufferedReader = new BufferedReader(reader);
-//        StringBuilder sb = new StringBuilder("");
-//        String str;
-//        while ((str = bufferedReader.readLine()) != null) {
-//            sb.append(str);
-//            sb.append("\n");
-//        }
-//        return sb.toString();
-//    }
-
     private void renderMarkdown(String filename) {
         try {
             InputStream in = getResources().getAssets().open(filename);
@@ -58,4 +47,16 @@ public class SearchResultActivity extends AppCompatActivity {
         }
 
     }
+
+//    private String readText(InputStream is) throws Exception {
+//        InputStreamReader reader = new InputStreamReader(is);
+//        BufferedReader bufferedReader = new BufferedReader(reader);
+//        StringBuilder sb = new StringBuilder("");
+//        String str;
+//        while ((str = bufferedReader.readLine()) != null) {
+//            sb.append(str);
+//            sb.append("\n");
+//        }
+//        return sb.toString();
+//    }
 }
