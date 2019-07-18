@@ -5,7 +5,8 @@ Apache服务器前端控制工具
 
 ## 补充说明
 
-**apachectl命令** 是Apache的Web服务器前端控制工具，用以启动、关闭和重新启动Web服务器进程。
+**apachectl命令** 是Apache的Web服务器前端控制工具，用以启动、关闭和重新启动
+Web服务器进程。
 
 ### 语法  
 

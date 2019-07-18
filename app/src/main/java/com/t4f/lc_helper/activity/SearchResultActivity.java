@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.t4f.lc_helper.R;
@@ -41,6 +42,14 @@ public class SearchResultActivity extends AppCompatActivity {
             WebView contentBox = (WebView) findViewById(R.id.wv_content);
             contentBox.loadData(render.render(doc), "text/html; charset=UTF-8", null);
             contentBox.setVisibility(View.VISIBLE);
+
+            // WebView自适应屏幕，支持缩放
+            WebSettings settings = contentBox.getSettings();
+            // settings.setUseWideViewPort(true);
+            settings.setLoadWithOverviewMode(true); // 自适应屏幕
+            settings.setSupportZoom(true);          // 设置支持缩放
+            settings.setBuiltInZoomControls(true);  //
+            settings.setDisplayZoomControls(false); // 隐藏缩放按钮
         }
         catch (IOException e) {
             e.printStackTrace();

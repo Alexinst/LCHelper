@@ -16,7 +16,8 @@ apk del openssh openntp vim
 
 ### 升级
 
-upgrade命令升级系统已安装的所以软件包（一般包括内核），当然也可指定仅升级部分软件包（通过-u或–upgrade选择指定）。
+upgrade命令升级系统已安装的所以软件包（一般包括内核），当然也可指定仅升级部
+分软件包（通过-u或–upgrade选择指定）。
 
 ```shell
 apk update # 更新最新本地镜像源
