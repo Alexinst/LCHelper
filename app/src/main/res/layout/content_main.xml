@@ -9,22 +9,11 @@
     tools:layout_editor_absoluteY="56dp"
     tools:showIn="@layout/app_bar_main">
 
-    <!--<EditText-->
-
-        <!--android:layout_width="300dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:hint="@string/search_hint"-->
-        <!--android:text=""-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-
     <AutoCompleteTextView
         android:id="@+id/input_box"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:hint="@string/search_hint"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,12 +23,13 @@
         android:id="@+id/button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-
+        android:layout_marginEnd="8dp"
         android:onClick="onClickSearch"
         android:text="@string/search"
-        app:layout_constraintLeft_toRightOf="@id/input_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/input_box"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--<EditText-->
@@ -52,7 +42,5 @@
         <!--android:text=""-->
         <!--app:layout_constraintLeft_toLeftOf="parent"-->
         <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-
 
 </android.support.constraint.ConstraintLayout>
