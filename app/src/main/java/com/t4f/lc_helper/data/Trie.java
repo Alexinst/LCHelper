@@ -38,15 +38,6 @@ public class Trie {
     public void startWith(String s) {
 
     }
-
 }
 
-class TrieNode {
-    public HashMap<Character, TrieNode> next;
-    public boolean isEnd;
 
-    public TrieNode() {
-        next = new HashMap<>();
-        isEnd = false;
-    }
-}
