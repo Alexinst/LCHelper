@@ -1,15 +1,21 @@
 package com.t4f.lc_helper.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.t4f.lc_helper.R;
+import com.t4f.lc_helper.sql.CommandDatabaseHelper;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,6 +35,9 @@ public class SearchResultActivity extends AppCompatActivity {
         String cmd = intent.getStringExtra("cmd");
         String filename = String.format("commands/%s.md", cmd);
         renderMarkdown(filename);
+
+        // 更新表单 History
+        new UpdateCommandTask().execute(cmd);
     }
 
     private void renderMarkdown(String filename) {
@@ -55,8 +64,38 @@ public class SearchResultActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
     }
 
+    private class UpdateCommandTask extends AsyncTask<String, Void, Boolean> {
+
+        protected Boolean doInBackground(String... cmds) {
+            ContentValues cmdValues = new ContentValues();
+            cmdValues.put("NAME", cmds[0]);
+
+            SQLiteOpenHelper cmdDBHelper =
+                    new CommandDatabaseHelper(SearchResultActivity.this);
+
+            try {
+                SQLiteDatabase db = cmdDBHelper.getWritableDatabase();
+                db.insert("History", null, cmdValues);
+                db.close();
+
+                return true;
+            } catch (SQLiteException e) {
+                return false;
+            }
+        }
+
+        protected void onPostExecute(Boolean success) {
+            if (!success) {
+                Toast toast = Toast.makeText(SearchResultActivity.this,
+                                            "SearchResultActivity: 历史记录更新失败",
+                                             Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
+    }
 //    private String readText(InputStream is) throws Exception {
 //        InputStreamReader reader = new InputStreamReader(is);
 //        BufferedReader bufferedReader = new BufferedReader(reader);

@@ -1,10 +1,7 @@
 package com.t4f.lc_helper.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.t4f.lc_helper.data.Info;
@@ -28,15 +23,12 @@ import com.t4f.lc_helper.data.Trie;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private AutoCompleteTextView inputBox;
-    public Map<String, Info> cmdMap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,38 +46,49 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // 读取data.json
+        Map<String, Info> cmds = null;
+        cmds = readData();
+
+//        // ToTest: 创建前缀树，储存所有指令名
+//        Trie cmdTree = new Trie();
+//        for (String cmdName : cmds.keySet()) {
+//            cmdTree.insert(cmdName);
+//        }
+
+        // 监听 AutoCompleteTextView
+        inputBox = (AutoCompleteTextView) findViewById(R.id.input_box);
+        String[] autoStrings = cmds.keySet().toArray(new String[0]);
+
+//        String[] autoStrings = new String[cmds.keySet().size()];
+//        int i = 0;
+//        for (String cmdName : cmds.keySet()) {
+//            autoStrings[i] = cmdName;
+//            i++;
+//        }
+
+        // 设置数据源
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_dropdown_item_1line, autoStrings);
+        inputBox.setAdapter(adapter);
+    }
+
+    private Map<String, Info> readData() {
         String dataFiles = "CmdInfo.json";
         JsonDataReader dataReader = new JsonDataReader();
+        Map<String, Info> cmds = null;
 
         try {
             InputStream in = getResources().getAssets().open(dataFiles);
-            cmdMap = dataReader.readJsonStream(in);
+            cmds = dataReader.readJsonStream(in);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
-        // ToTest: 创建前缀树，储存所有指令名
-        Trie cmdTree = new Trie();
-        for (String cmdName : cmdMap.keySet()) {
-            cmdTree.insert(cmdName);
-        }
+        return cmds;
+    }
 
-        // TODO:监听 AutoCompleteTextView
-        inputBox = (AutoCompleteTextView) findViewById(R.id.input_box);
-        // 设置数据源
-
-        String[] autoStrings = new String[cmdMap.keySet().size()];
-        int i = 0;
-        for (String cmdName : cmdMap.keySet()) {
-            autoStrings[i] = cmdName;
-            i++;
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_dropdown_item_1line, autoStrings);
-        inputBox.setAdapter(adapter);
-
+    private void topK() {
 //        inputBox.addTextChangedListener(new TextWatcher() {
 ////            private CharSequence temp;
 ////            private int selectionStart;
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity
 //                }
 //
 //                List<String> suggessions = new ArrayList<>();
-//                suggessions.add(cmdMap.get(str).getName());
+//                suggessions.add(cmds.get(str).getName());
 //                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 //                        android.R.layout.simple_list_item_1, suggessions);
 //                suggessionsPop.setAdapter(adapter);
@@ -124,9 +127,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClickSearch(View view) {
+        // 获取待查询命令名
         TextView searchBox = (TextView) findViewById(R.id.input_box);
         String cmd = searchBox.getText().toString().toLowerCase();
 
+        // 读取并显示对应命令详情
         Intent intent = new Intent(this, SearchResultActivity.class);
         intent.putExtra("cmd", cmd);
         startActivity(intent);
@@ -173,9 +178,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_history) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+            Intent intent = new Intent(this, HistoryActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
 
         }
