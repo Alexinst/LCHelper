@@ -1,5 +1,6 @@
 package com.t4f.lc_helper.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void runAtFirst() {
-        SharedPreferences sp = getSharedPreferences("isFirst", 0);
+        SharedPreferences sp = getSharedPreferences("isFirst",
+                                                    Context.MODE_PRIVATE);
         Boolean isFirst = sp.getBoolean("isFirst", true);
         if (isFirst) {
             Toast.makeText(this, "First Run", Toast.LENGTH_LONG).show();
