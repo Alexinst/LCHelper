@@ -96,15 +96,4 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         }
     }
-//    private String readText(InputStream is) throws Exception {
-//        InputStreamReader reader = new InputStreamReader(is);
-//        BufferedReader bufferedReader = new BufferedReader(reader);
-//        StringBuilder sb = new StringBuilder("");
-//        String str;
-//        while ((str = bufferedReader.readLine()) != null) {
-//            sb.append(str);
-//            sb.append("\n");
-//        }
-//        return sb.toString();
-//    }
 }

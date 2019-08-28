@@ -1,14 +1,18 @@
 package com.t4f.lc_helper.activity;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
@@ -38,7 +42,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         // 读取历史记录
         listHistory = (ListView) findViewById(R.id.history);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.history_recycler);
         SQLiteOpenHelper cmdDBHelper = new CommandDatabaseHelper(this);
+
         try {
             db = cmdDBHelper.getReadableDatabase();
             cursor = db.query("History",
@@ -60,7 +66,10 @@ public class HistoryActivity extends AppCompatActivity {
             toast.show();
         }
 
-        addItemLinks();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+
+        setOnItemClickListener();
 
 //        String FILENAME = "history.txt";
 //        String history = "";
@@ -93,7 +102,7 @@ public class HistoryActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void addItemLinks() {
+    private void setOnItemClickListener() {
         // 添加历史记录的链接
         AdapterView.OnItemClickListener itemClickListener =
                 new AdapterView.OnItemClickListener() {
@@ -113,21 +122,21 @@ public class HistoryActivity extends AppCompatActivity {
         listHistory.setOnItemClickListener(itemClickListener);
     }
 
-    private List<String> split(String history, char tag) {
-        List<String> records = new ArrayList<>();
-        int start = 0, len = history.length();
-        for (int i = 0; i < len; i++) {
-            if (history.charAt(i) == tag) {
-                records.add(history.substring(start, i));
-                start = i + 1;
-            }
-        }
-
-        if (start < len)
-            records.add(history.substring(start, len));
-
-        return records;
-    }
+//    private List<String> split(String history, char tag) {
+//        List<String> records = new ArrayList<>();
+//        int start = 0, len = history.length();
+//        for (int i = 0; i < len; i++) {
+//            if (history.charAt(i) == tag) {
+//                records.add(history.substring(start, i));
+//                start = i + 1;
+//            }
+//        }
+//
+//        if (start < len)
+//            records.add(history.substring(start, len));
+//
+//        return records;
+//    }
 
     @Override
     public void onRestart() {

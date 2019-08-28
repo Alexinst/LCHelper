@@ -32,6 +32,7 @@
         </activity>
 
         <activity android:name=".activity.HistoryActivity"
+            android:label="@string/search_history"
             android:parentActivityName=".activity.MainActivity">
 
         </activity>

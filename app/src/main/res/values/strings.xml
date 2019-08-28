@@ -15,7 +15,8 @@
     <!--<string name="menu_send">Send</string>-->
 
     <string name="search">搜索</string>
-    <string name="cmd_info">Command Info</string>
+    <string name="cmd_info">指令详情</string>
+    <string name="search_history">查询历史</string>
 
     <string name="search_hint">输入指令名称</string>
 </resources>
