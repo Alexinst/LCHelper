@@ -44,3 +44,4 @@ public class CommandDatabaseHelper extends SQLiteOpenHelper {
         db.insert("History", null, cmdValues);
     }
 }
+
