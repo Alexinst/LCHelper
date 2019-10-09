@@ -30,7 +30,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private AutoCompleteTextView inputBox;
+    private AutoCompleteTextView searchBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +49,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        runAtFirst();
+//        runAtFirst();
 
         // 读取data.json
-        Map<String, Info> cmds = null;
-        cmds = readData();
+        Map<String, Info> cmds = readData();
 
 //        // ToTest: 创建前缀树，储存所有指令名
 //        Trie cmdTree = new Trie();
@@ -62,11 +61,11 @@ public class MainActivity extends AppCompatActivity
 //        }
 
         // 设置 AutoCompleteTextView 数据源
-        inputBox = (AutoCompleteTextView) findViewById(R.id.input_box);
+        searchBox = (AutoCompleteTextView) findViewById(R.id.input_box);
         String[] autoStrings = cmds.keySet().toArray(new String[0]);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_dropdown_item_1line, autoStrings);
-        inputBox.setAdapter(adapter);
+        searchBox.setAdapter(adapter);
     }
 
     private void runAtFirst() {
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void topK() {
-//        inputBox.addTextChangedListener(new TextWatcher() {
+//        searchBox.addTextChangedListener(new TextWatcher() {
 ////            private CharSequence temp;
 ////            private int selectionStart;
 ////            private int selectionEnd;
@@ -136,7 +135,6 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickSearch(View view) {
         // 获取待查询命令名
-        TextView searchBox = findViewById(R.id.input_box);
         String cmdName = searchBox.getText().toString().toLowerCase().trim();
 
         // 读取并显示对应命令详情

@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -29,6 +31,12 @@ public class SearchResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
+        Toolbar toolbar = findViewById(R.id.toolbar_search_result);
+        setSupportActionBar(toolbar);
+
+        // 启用向上导航
+        setHomeAsUp(toolbar);
+
         Intent intent = getIntent();
         String cmd = intent.getStringExtra("cmd");
         String filename = String.format("commands/%s.md", cmd);
@@ -36,6 +44,17 @@ public class SearchResultActivity extends AppCompatActivity {
 
         // 更新表单 History
         new UpdateDataBaseTask().execute(cmd);
+    }
+
+    private void setHomeAsUp(Toolbar toolbar) {
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolbar.setTitle(R.string.cmd_info);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavUtils.navigateUpFromSameTask(SearchResultActivity.this);
+            }
+        });
     }
 
     private void renderMarkdown(String filename) {
@@ -57,8 +76,7 @@ public class SearchResultActivity extends AppCompatActivity {
             settings.setSupportZoom(true);          // 设置支持缩放
             settings.setBuiltInZoomControls(true);  //
             settings.setDisplayZoomControls(false); // 隐藏缩放按钮
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -85,7 +103,7 @@ public class SearchResultActivity extends AppCompatActivity {
             if (!success) {
                 String message = "SearchResultActivity: 历史记录更新失败";
                 Toast toast = Toast.makeText(SearchResultActivity.this, message,
-                                             Toast.LENGTH_LONG);
+                        Toast.LENGTH_LONG);
                 toast.show();
             }
         }
