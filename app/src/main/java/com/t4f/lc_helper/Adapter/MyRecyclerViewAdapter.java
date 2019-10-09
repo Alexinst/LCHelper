@@ -12,10 +12,10 @@ import android.widget.TextView;
 import com.t4f.lc_helper.R;
 import com.t4f.lc_helper.data.Info;
 
-public class MyHistoryAdapter extends
-        CursorRecyclerViewAdapter<MyHistoryAdapter.ViewHolder> {
+public class MyRecyclerViewAdapter extends
+        CursorRecyclerViewAdapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private MyHistoryAdapter.Listener listener;
+    private MyRecyclerViewAdapter.Listener listener;
 
     public interface Listener {
         void onClick(String title);
@@ -30,12 +30,12 @@ public class MyHistoryAdapter extends
         }
     }
 
-    public MyHistoryAdapter(Context context, Cursor cursor) {
+    public MyRecyclerViewAdapter(Context context, Cursor cursor) {
         super(context, cursor);
     }
 
     @Override
-    public MyHistoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView itemView = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.history_list_item, parent, false);
         ViewHolder vh = new ViewHolder(itemView);

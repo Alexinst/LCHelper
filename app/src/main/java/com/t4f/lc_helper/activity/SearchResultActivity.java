@@ -71,7 +71,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
             try {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-//                db.insert(DBHelper.TABLE_NAME, null, cmdValues);
+//                db.insert(DBHelper.HISTORY_TABLE, null, cmdValues);
                 dbHelper.insertRecord(db, cmds[0]);
                 db.close();
 

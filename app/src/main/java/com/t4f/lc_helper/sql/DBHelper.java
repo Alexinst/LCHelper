@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 2;
 
     public static final String DB_NAME = "Commands";
-    public static final String TABLE_NAME = "History";
+    public static final String HISTORY_TABLE = "History";
 
     public static final String FIELD_TITLE = "title";
     public static final String FIELD_DATE = "date";
@@ -40,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
-            String CREATE_HISTORY_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+            String CREATE_HISTORY_TABLE = "CREATE TABLE " + HISTORY_TABLE + "("
                     + FIELD_TITLE + " TEXT, "
                     + FIELD_DATE + " TEXT)";
             //  + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -57,7 +56,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         // 查询此命令是否已在历史记录中
-        String SEARCH_CMD = "SELECT * FROM " + TABLE_NAME +" WHERE TITLE = ?";
+        String SEARCH_CMD = "SELECT * FROM " + HISTORY_TABLE +" WHERE TITLE = ?";
         Cursor cursor = db.rawQuery(SEARCH_CMD, new String[] {name});
 
         Date now = new Date();  // 当前时间
@@ -71,7 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             record.put("date", sdf.format(now));
 
-            db.update(TABLE_NAME, record, "title = ?",new String[]{name});
+            db.update(HISTORY_TABLE, record, "title = ?",new String[]{name});
 
         } else {
             String message = "Insert Record";
@@ -81,7 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
             record.put("date", sdf.format(now));
             Log.e("SearchResultActivity", record.toString());
 
-            db.insert(TABLE_NAME, null, record);
+            db.insert(HISTORY_TABLE, null, record);
         }
 
         cursor.close();

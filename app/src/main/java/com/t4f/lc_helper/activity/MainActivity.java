@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity
         if (isFirst) {
             Toast.makeText(this, "First Run", Toast.LENGTH_LONG).show();
             sp.edit().putBoolean("isFirst", false).commit();
-        }
-        else
+        } else
             Toast.makeText(this, "Not First Run", Toast.LENGTH_LONG).show();
     }
 
@@ -137,12 +136,12 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickSearch(View view) {
         // 获取待查询命令名
-        TextView searchBox = (TextView) findViewById(R.id.input_box);
-        String cmd = searchBox.getText().toString().toLowerCase();
+        TextView searchBox = findViewById(R.id.input_box);
+        String cmdName = searchBox.getText().toString().toLowerCase().trim();
 
         // 读取并显示对应命令详情
         Intent intent = new Intent(this, SearchResultActivity.class);
-        intent.putExtra("cmd", cmd);
+        intent.putExtra("cmd", cmdName);
         startActivity(intent);
     }
 
