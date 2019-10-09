@@ -7,6 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- main activity -->
     <string name="menu_home">首页</string>
     <string name="menu_history">历史记录</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -14,9 +15,15 @@
     <!--<string name="menu_share">Share</string>-->
     <!--<string name="menu_send">Send</string>-->
 
-    <string name="search">搜索</string>
-    <string name="cmd_info">指令详情</string>
-    <string name="search_history">查询历史</string>
-
     <string name="search_hint">输入指令名称</string>
+    <string name="search">搜索</string>
+
+    <!-- history activity -->
+    <string name="search_history">查询历史</string>
+    <string name="menu_home_as_up">返回</string>
+    <string name="menu_delete">清空历史记录</string>
+
+    <!-- search result activity -->
+    <string name="cmd_info">指令详情</string>
+
 </resources>

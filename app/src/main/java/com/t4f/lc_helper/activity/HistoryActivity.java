@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.t4f.lc_helper.Adapter.MyHistoryAdapter;
 import com.t4f.lc_helper.R;
@@ -30,9 +31,11 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar_history);
+        setSupportActionBar(toolbar);
 
         // 启用向上导航
-        setHomeUpDisplay();
+//        toolbar.setNavigationIcon(R.drawable.);
 
         // 读取历史记录
         SQLiteOpenHelper dbHelper = new DBHelper(this);
@@ -66,11 +69,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         // 设置 recyclerView 的点击响应动作
         setOnItemClickListener();
-    }
-
-    private void setHomeUpDisplay() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void setOnItemClickListener() {
