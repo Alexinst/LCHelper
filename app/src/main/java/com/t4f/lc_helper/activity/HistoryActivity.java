@@ -11,26 +11,23 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
-import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.t4f.lc_helper.Adapter.CursorRecyclerViewAdapter;
+import com.t4f.lc_helper.Adapter.MyHistoryAdapter;
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.sql.CommandDatabaseHelper;
+import com.t4f.lc_helper.sql.DBHistoryHelper;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private ListView listHistory;
+    private RecyclerView recyclerView;
     private SQLiteDatabase db;
     private Cursor cursor;
+    private MyHistoryAdapter cursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,60 +38,37 @@ public class HistoryActivity extends AppCompatActivity {
         setHomeUpDisplay();
 
         // 读取历史记录
-        listHistory = (ListView) findViewById(R.id.history);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.history_recycler);
-        SQLiteOpenHelper cmdDBHelper = new CommandDatabaseHelper(this);
+        SQLiteOpenHelper dbHistoryHelper = new DBHistoryHelper(this);
+        recyclerView = findViewById(R.id.history_recycler);
 
+        // 生成 cursor，为 recyclerView 构建 adapter
         try {
-            db = cmdDBHelper.getReadableDatabase();
-            cursor = db.query("History",
-                              new String[]{"_id", "NAME"},
-                              null, null, null,
-                              null, null, null);
+            db = dbHistoryHelper.getReadableDatabase();
+            cursor = db.query(DBHistoryHelper.TABLE_NAME,
+                              new String[]{"title", "date"},
+                      null,
+                    null,
+                       null,
+                        null,
+                               DBHistoryHelper.FIELD_DATE + " DESC",
+                          null); //  + " DESC"
 
-            SimpleCursorAdapter cursorAdapter =
-                    new SimpleCursorAdapter(this,
-                                            android.R.layout.simple_list_item_1,
-                                            cursor,
-                                            new String[]{"NAME"},
-                                            new int[]{android.R.id.text1},
-                                            0);
-            listHistory.setAdapter(cursorAdapter);
+            cursorAdapter = new MyHistoryAdapter(this, cursor);
+            recyclerView.setAdapter(cursorAdapter);
+
         } catch (SQLiteException e) {
-            Toast toast = Toast.makeText(this, "HistoryActivity: 找不到历史记录",
+            String message = "HistoryActivity: 找不到历史记录";
+            Toast toast = Toast.makeText(this, message,
                                          Toast.LENGTH_LONG);
             toast.show();
         }
 
+        // 设置 recyclerView 为 LinearLayout
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
-
+        // 设置 recyclerView 的点击响应动作
         setOnItemClickListener();
-
-//        String FILENAME = "history.txt";
-//        String history = "";
-//        try {
-////            FileInputStream fis = openFileInput(FILENAME);
-//            InputStream is = getResources().getAssets().open(FILENAME);
-//            InputStreamReader isReader = new InputStreamReader(is);
-//            BufferedReader bfReader = new BufferedReader(isReader);
-//
-//            StringBuilder sb = new StringBuilder();
-//            String line = "";
-//            while ((line = bfReader.readLine()) != null)
-//                sb.append(line);
-//
-//            history = sb.toString();
-//            is.close();
-//        }
-//        catch (IOException e) {
-//            Toast toast = Toast.makeText(this, "IOException", Toast.LENGTH_LONG);
-//            toast.show();
-//        }
-//
-//        char tag = ',';
-//        records = split(history, tag);
-//
     }
 
     private void setHomeUpDisplay() {
@@ -104,56 +78,36 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void setOnItemClickListener() {
         // 添加历史记录的链接
-        AdapterView.OnItemClickListener itemClickListener =
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent,
-                                            View view,
-                                            int position,
-                                            long id) {
-                        Intent intent = new Intent(HistoryActivity.this,
-                                SearchResultActivity.class);
-                        TextView textView = (TextView) view;
-                        String name = textView.getText().toString();
-                        intent.putExtra("cmd", name);
-                        startActivity(intent);
-                    }
-                };
-        listHistory.setOnItemClickListener(itemClickListener);
+        if (cursorAdapter != null) {
+            cursorAdapter.setListener(new MyHistoryAdapter.Listener() {
+                @Override
+                public void onClick(String title) {
+                    Intent intent = new Intent(HistoryActivity.this,
+                                               SearchResultActivity.class);
+                    intent.putExtra("cmd", title);
+                    startActivity(intent);
+                }
+            });
+        }
     }
-
-//    private List<String> split(String history, char tag) {
-//        List<String> records = new ArrayList<>();
-//        int start = 0, len = history.length();
-//        for (int i = 0; i < len; i++) {
-//            if (history.charAt(i) == tag) {
-//                records.add(history.substring(start, i));
-//                start = i + 1;
-//            }
-//        }
-//
-//        if (start < len)
-//            records.add(history.substring(start, len));
-//
-//        return records;
-//    }
 
     @Override
     public void onRestart() {
         super.onRestart();
-        Cursor newCursor = db.query("History",
-                                    new String[]{"NAME"},
-                           null, null, null,
-                             null, null, null);
-        CursorAdapter adapter = (CursorAdapter) listHistory.getAdapter();
-        adapter.changeCursor(newCursor);
-        cursor = newCursor;
+//        Cursor newCursor = db.query("History",
+//                                    new String[]{"NAME"},
+//                                    null, null, null,
+//                                    null, null, null);
+////        CursorAdapter adapter = (CursorAdapter) listHistory.getAdapter();
+//        CursorRecyclerViewAdapter adapter = (CursorRecyclerViewAdapter) recyclerView.getAdapter();
+//        adapter.changeCursor(newCursor);
+//        cursor = newCursor;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cursor.close();
-        db.close();
+        if (cursor != null) cursor.close();
+        if (db != null) db.close();
     }
 }

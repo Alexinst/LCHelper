@@ -14,7 +14,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.sql.CommandDatabaseHelper;
+import com.t4f.lc_helper.sql.DBHistoryHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +37,7 @@ public class SearchResultActivity extends AppCompatActivity {
         renderMarkdown(filename);
 
         // 更新表单 History
-        new UpdateCommandTask().execute(cmd);
+        new UpdateDataBaseTask().execute(cmd);
     }
 
     private void renderMarkdown(String filename) {
@@ -63,22 +63,18 @@ public class SearchResultActivity extends AppCompatActivity {
         catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
-    private class UpdateCommandTask extends AsyncTask<String, Void, Boolean> {
+    private class UpdateDataBaseTask extends AsyncTask<String, Void, Boolean> {
 
         protected Boolean doInBackground(String... cmds) {
-            ContentValues cmdValues = new ContentValues();
-            cmdValues.put("NAME", cmds[0]);
-
-            SQLiteOpenHelper cmdDBHelper =
-                    new CommandDatabaseHelper(SearchResultActivity.this);
+            DBHistoryHelper dbHistoryHelper =
+                    new DBHistoryHelper(SearchResultActivity.this);
 
             try {
-                SQLiteDatabase db = cmdDBHelper.getWritableDatabase();
-                db.insert("History", null, cmdValues);
+                SQLiteDatabase db = dbHistoryHelper.getWritableDatabase();
+//                db.insert(DBHistoryHelper.TABLE_NAME, null, cmdValues);
+                dbHistoryHelper.insertRecord(db, cmds[0]);
                 db.close();
 
                 return true;
@@ -89,8 +85,8 @@ public class SearchResultActivity extends AppCompatActivity {
 
         protected void onPostExecute(Boolean success) {
             if (!success) {
-                Toast toast = Toast.makeText(SearchResultActivity.this,
-                                            "SearchResultActivity: 历史记录更新失败",
+                String message = "SearchResultActivity: 历史记录更新失败";
+                Toast toast = Toast.makeText(SearchResultActivity.this, message,
                                              Toast.LENGTH_LONG);
                 toast.show();
             }

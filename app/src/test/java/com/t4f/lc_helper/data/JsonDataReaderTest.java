@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 public class JsonDataReaderTest {
     JsonDataReader reader = new JsonDataReader();
 
@@ -36,6 +34,6 @@ public class JsonDataReaderTest {
             e.printStackTrace();
         }
 
-        Assert.assertEquals(cmdLists.get(0).getName(), test.get(0).getName());
+        Assert.assertEquals(cmdLists.get(0).getTitle(), test.get(0).getTitle());
     }
 }

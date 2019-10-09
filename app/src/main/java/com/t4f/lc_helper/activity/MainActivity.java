@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.t4f.lc_helper.data.Info;
 import com.t4f.lc_helper.data.JsonDataReader;
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.data.Trie;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +42,9 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity
 //                }
 //
 //                List<String> suggessions = new ArrayList<>();
-//                suggessions.add(cmds.get(str).getName());
+//                suggessions.add(cmds.get(str).getTitle());
 //                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 //                        android.R.layout.simple_list_item_1, suggessions);
 //                suggessionsPop.setAdapter(adapter);
