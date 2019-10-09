@@ -1,10 +1,8 @@
 package com.t4f.lc_helper.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +12,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.sql.DBHistoryHelper;
+import com.t4f.lc_helper.sql.DBHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,13 +66,13 @@ public class SearchResultActivity extends AppCompatActivity {
     private class UpdateDataBaseTask extends AsyncTask<String, Void, Boolean> {
 
         protected Boolean doInBackground(String... cmds) {
-            DBHistoryHelper dbHistoryHelper =
-                    new DBHistoryHelper(SearchResultActivity.this);
+            DBHelper dbHelper =
+                    new DBHelper(SearchResultActivity.this);
 
             try {
-                SQLiteDatabase db = dbHistoryHelper.getWritableDatabase();
-//                db.insert(DBHistoryHelper.TABLE_NAME, null, cmdValues);
-                dbHistoryHelper.insertRecord(db, cmds[0]);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+//                db.insert(DBHelper.TABLE_NAME, null, cmdValues);
+                dbHelper.insertRecord(db, cmds[0]);
                 db.close();
 
                 return true;

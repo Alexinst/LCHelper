@@ -12,18 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.t4f.lc_helper.Adapter.CursorRecyclerViewAdapter;
 import com.t4f.lc_helper.Adapter.MyHistoryAdapter;
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.sql.DBHistoryHelper;
+import com.t4f.lc_helper.sql.DBHelper;
 
 
 public class HistoryActivity extends AppCompatActivity {
 
-    private ListView listHistory;
     private RecyclerView recyclerView;
     private SQLiteDatabase db;
     private Cursor cursor;
@@ -38,19 +35,19 @@ public class HistoryActivity extends AppCompatActivity {
         setHomeUpDisplay();
 
         // 读取历史记录
-        SQLiteOpenHelper dbHistoryHelper = new DBHistoryHelper(this);
+        SQLiteOpenHelper dbHelper = new DBHelper(this);
         recyclerView = findViewById(R.id.history_recycler);
 
         // 生成 cursor，为 recyclerView 构建 adapter
         try {
-            db = dbHistoryHelper.getReadableDatabase();
-            cursor = db.query(DBHistoryHelper.TABLE_NAME,
+            db = dbHelper.getReadableDatabase();
+            cursor = db.query(DBHelper.TABLE_NAME,
                               new String[]{"title", "date"},
                       null,
                     null,
                        null,
                         null,
-                               DBHistoryHelper.FIELD_DATE + " DESC",
+                               DBHelper.FIELD_DATE + " DESC",
                           null); //  + " DESC"
 
             cursorAdapter = new MyHistoryAdapter(this, cursor);

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DBHistoryHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DB_VERSION = 2;
 
@@ -23,7 +23,7 @@ public class DBHistoryHelper extends SQLiteOpenHelper {
 
     public Context context;
 
-    public DBHistoryHelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context.getApplicationContext();
     }
