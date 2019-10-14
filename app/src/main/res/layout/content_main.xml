@@ -17,7 +17,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:hint="@string/search_hint"
+        android:singleLine="true"
+        android:hint="@string/hint_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_search"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +33,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:onClick="onClickSearch"
-        android:text="@string/search"
+        android:text="@string/button_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,11 +42,11 @@
 
 <!--<android.widget.TableLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--xmlns:Tools="http://schemas.android.com/tools"-->
     <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-    <!--tools:context=".activity.MainActivity"-->
-    <!--tools:layout_editor_absoluteY="56dp"-->
-    <!--tools:showIn="@layout/app_bar_main"-->
+    <!--Tools:context=".activity.MainActivity"-->
+    <!--Tools:layout_editor_absoluteY="56dp"-->
+    <!--Tools:showIn="@layout/app_bar_main"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
     <!--android:stretchColumns="0">-->

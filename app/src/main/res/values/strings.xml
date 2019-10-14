@@ -10,20 +10,22 @@
     <!-- main activity -->
     <string name="menu_home">首页</string>
     <string name="menu_history">历史记录</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_view_all">全部命令</string>
     <string name="menu_settings">设置</string>
     <!--<string name="menu_share">Share</string>-->
     <!--<string name="menu_send">Send</string>-->
 
-    <string name="search_hint">输入指令名称</string>
-    <string name="search">搜索</string>
+    <string name="hint_search">输入指令名称</string>
+    <string name="button_search">搜索</string>
 
     <!-- history activity -->
-    <string name="search_history">查询历史</string>
+    <string name="label_history">查询历史</string>
     <string name="menu_home_as_up">返回</string>
     <string name="menu_delete">清空历史记录</string>
 
     <!-- search result activity -->
-    <string name="cmd_info">指令详情</string>
+    <string name="label_search_result">指令详情</string>
 
+    <!-- view all activity -->
+    <string name="label_view_all">全部指令</string>
 </resources>

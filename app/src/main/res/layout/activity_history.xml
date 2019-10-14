@@ -10,7 +10,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_history"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -21,7 +21,7 @@
     <!-- app:popupTheme="@style/ThemeOverlay.AppCompat.Light -->
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/history_recycler"
+        android:id="@+id/recycler_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
