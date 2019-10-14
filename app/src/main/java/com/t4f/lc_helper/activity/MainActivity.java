@@ -16,15 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.t4f.lc_helper.data.Info;
-import com.t4f.lc_helper.data.JsonDataReader;
+import com.t4f.lc_helper.utils.Tools;
+import com.t4f.lc_helper.utils.Info;
+import com.t4f.lc_helper.utils.JsonDataReader;
 import com.t4f.lc_helper.R;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 //        runAtFirst();
 
         // 读取data.json
-        Map<String, Info> cmds = readData();
+        Map<String, Info> cmds = Tools.readData(this, "CmdInfo.json");
 
 //        // ToTest: 创建前缀树，储存所有指令名
 //        Trie cmdTree = new Trie();
@@ -70,29 +68,13 @@ public class MainActivity extends AppCompatActivity
 
     private void runAtFirst() {
         SharedPreferences sp = getSharedPreferences("isFirst",
-                                                    Context.MODE_PRIVATE);
+                Context.MODE_PRIVATE);
         Boolean isFirst = sp.getBoolean("isFirst", true);
         if (isFirst) {
             Toast.makeText(this, "First Run", Toast.LENGTH_LONG).show();
             sp.edit().putBoolean("isFirst", false).commit();
         } else
             Toast.makeText(this, "Not First Run", Toast.LENGTH_LONG).show();
-    }
-
-    private Map<String, Info> readData() {
-        String dataFiles = "CmdInfo.json";
-        JsonDataReader dataReader = new JsonDataReader();
-        Map<String, Info> cmds = null;
-
-        try {
-            InputStream in = getResources().getAssets().open(dataFiles);
-            cmds = dataReader.readJsonStream(in);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return cmds;
     }
 
     private void topK() {
@@ -186,8 +168,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
             Intent intent = new Intent(this, HistoryActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_settings) {
-
+        } else if (id == R.id.nav_view_all) {
+            Intent intent = new Intent(this, ViewAllActivity.class);
+            startActivity(intent);
         }
 //        else if (id == R.id.nav_share) {
 //

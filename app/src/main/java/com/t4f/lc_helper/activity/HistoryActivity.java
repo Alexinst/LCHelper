@@ -1,5 +1,6 @@
 package com.t4f.lc_helper.activity;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -18,9 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.t4f.lc_helper.Adapter.MyRecyclerViewAdapter;
+import com.t4f.lc_helper.adapter.MyRecyclerViewAdapter;
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.sql.DBHelper;
+import com.t4f.lc_helper.sql.DatabaseHelper;
+import com.t4f.lc_helper.utils.Tools;
 
 
 public class HistoryActivity extends AppCompatActivity {
@@ -43,8 +45,8 @@ public class HistoryActivity extends AppCompatActivity {
         setHomeAsUp(toolbar);
 
         // 读取历史记录
-        SQLiteOpenHelper dbHelper = new DBHelper(this);
-        recyclerView = findViewById(R.id.history_recycler);
+        SQLiteOpenHelper dbHelper = new DatabaseHelper(this);
+        recyclerView = findViewById(R.id.recycler_history);
 
         // 生成 cursor，为 recyclerView 构建 adapter
         try {
@@ -93,7 +95,7 @@ public class HistoryActivity extends AppCompatActivity {
                 public void onClick(String title) {
                     Intent intent = new Intent(HistoryActivity.this,
                             SearchResultActivity.class);
-                    intent.putExtra("cmd", title.trim());
+                    intent.putExtra(SearchResultActivity.STR_TITLE, title.trim());
                     startActivity(intent);
                 }
             });
@@ -119,7 +121,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void clearHistory() {
-        String CLEAR_HISTORY = "DELETE FROM " + DBHelper.HISTORY_TABLE;
+        String CLEAR_HISTORY = "DELETE FROM " + DatabaseHelper.TABLE_HISTORY;
         db.execSQL(CLEAR_HISTORY);
 
         refresh();
@@ -137,13 +139,13 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private Cursor getCursor() {
-        return db.query(DBHelper.HISTORY_TABLE,
+        return db.query(DatabaseHelper.TABLE_HISTORY,
                 new String[]{"title", "date"},
                 null,
                 null,
                 null,
                 null,
-                DBHelper.FIELD_DATE + " DESC",
+                DatabaseHelper.KEY_HISTORY_DATE + " DESC",
                 null); //  + " DESC"
     }
 

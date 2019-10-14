@@ -1,8 +1,6 @@
 package com.t4f.lc_helper.activity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +12,8 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.sql.DBHelper;
+import com.t4f.lc_helper.sql.DatabaseHelper;
+import com.t4f.lc_helper.utils.Tools;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +24,8 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 public class SearchResultActivity extends AppCompatActivity {
+
+    public static final String STR_TITLE = "cmd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class SearchResultActivity extends AppCompatActivity {
         setHomeAsUp(toolbar);
 
         Intent intent = getIntent();
-        String cmd = intent.getStringExtra("cmd");
+        String cmd = intent.getStringExtra(STR_TITLE);
         String filename = String.format("commands/%s.md", cmd);
         renderMarkdown(filename);
 
@@ -48,7 +49,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private void setHomeAsUp(Toolbar toolbar) {
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
-        toolbar.setTitle(R.string.cmd_info);
+        toolbar.setTitle(R.string.label_search_result);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,20 +84,12 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private class UpdateDataBaseTask extends AsyncTask<String, Void, Boolean> {
 
-        protected Boolean doInBackground(String... cmds) {
-            DBHelper dbHelper =
-                    new DBHelper(SearchResultActivity.this);
+        protected Boolean doInBackground(String... cmdNames) {
+            DatabaseHelper dbHelper = DatabaseHelper.getInstance(SearchResultActivity.this);
 
-            try {
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-//                db.insert(DBHelper.HISTORY_TABLE, null, cmdValues);
-                dbHelper.insertRecord(db, cmds[0]);
-                db.close();
+            long id = dbHelper.addOrUpdateHistory(cmdNames[0], Tools.getTime());
 
-                return true;
-            } catch (SQLiteException e) {
-                return false;
-            }
+            return id != -1;
         }
 
         protected void onPostExecute(Boolean success) {
