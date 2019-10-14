@@ -1,4 +1,4 @@
-package com.t4f.lc_helper.data;
+package com.t4f.lc_helper.utils;
 
 import com.google.gson.stream.JsonReader;
 

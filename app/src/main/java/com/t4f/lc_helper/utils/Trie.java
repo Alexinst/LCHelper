@@ -1,6 +1,4 @@
-package com.t4f.lc_helper.data;
-
-import java.util.HashMap;
+package com.t4f.lc_helper.utils;
 
 public class Trie {
     private TrieNode root;

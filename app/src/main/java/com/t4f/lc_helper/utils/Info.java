@@ -1,6 +1,4 @@
-package com.t4f.lc_helper.data;
-
-import java.text.SimpleDateFormat;
+package com.t4f.lc_helper.utils;
 
 public class Info implements java.io.Serializable {
     private String title;
