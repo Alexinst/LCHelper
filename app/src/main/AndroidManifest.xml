@@ -18,22 +18,32 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".activity.SearchResultActivity"
-            android:label="@string/cmd_info"
-            android:parentActivityName=".activity.HistoryActivity">
+            android:label="@string/label_search_result"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.HistoryActivity"
-            android:label="@string/search_history"
+        <activity
+            android:name=".activity.HistoryActivity"
+            android:label="@string/label_history"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".activity.MainActivity">
+
+        </activity>
+
+        <activity
+            android:name=".activity.ViewAllActivity"
+            android:label="@string/label_view_all"
+            android:theme="@style/AppTheme"
             android:parentActivityName=".activity.MainActivity">
 
         </activity>
