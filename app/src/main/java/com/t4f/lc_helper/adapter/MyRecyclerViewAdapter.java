@@ -1,4 +1,4 @@
-package com.t4f.lc_helper.Adapter;
+package com.t4f.lc_helper.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.t4f.lc_helper.R;
-import com.t4f.lc_helper.data.Info;
+import com.t4f.lc_helper.sql.DatabaseHelper;
+import com.t4f.lc_helper.utils.Info;
 
 public class MyRecyclerViewAdapter extends
         CursorRecyclerViewAdapter<MyRecyclerViewAdapter.ViewHolder> {
@@ -34,12 +35,10 @@ public class MyRecyclerViewAdapter extends
         super(context, cursor);
     }
 
-    @Override
     public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView itemView = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.history_list_item, parent, false);
-        ViewHolder vh = new ViewHolder(itemView);
-        return vh;
+        return new ViewHolder(itemView);
     }
 
     public void setListener(Listener listener) {
@@ -51,8 +50,8 @@ public class MyRecyclerViewAdapter extends
         CardView cardView = viewHolder.cardView;
         TextView textCmdName = cardView.findViewById(R.id.cmd_name);
 
-        Info cmd = fromCursor(cursor);
-        final String cmdName = cmd.getTitle();
+        final String cmdName = cursor.getString(
+                cursor.getColumnIndex(DatabaseHelper.KEY_HISTORY_TITLE));
         textCmdName.setText(cmdName);
 
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +64,4 @@ public class MyRecyclerViewAdapter extends
         });
     }
 
-    public Info fromCursor(Cursor cursor) {
-        return new Info(cursor.getString(cursor.getColumnIndex("title")),
-                        "", "",
-                        cursor.getString(cursor.getColumnIndex("date")));
-    }
 }

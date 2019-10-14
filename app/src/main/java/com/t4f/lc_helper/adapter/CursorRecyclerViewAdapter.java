@@ -1,4 +1,4 @@
-package com.t4f.lc_helper.Adapter;
+package com.t4f.lc_helper.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
