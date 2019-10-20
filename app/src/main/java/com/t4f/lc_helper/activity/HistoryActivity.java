@@ -42,7 +42,7 @@ public class HistoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // 启用向上导航
-        setHomeAsUp(toolbar);
+        Tools.setHomeAsUp(this, toolbar);
 
         // 读取历史记录
         SQLiteOpenHelper dbHelper = new DatabaseHelper(this);
@@ -145,7 +145,7 @@ public class HistoryActivity extends AppCompatActivity {
                 null,
                 null,
                 null,
-                DatabaseHelper.KEY_HISTORY_DATE + " DESC",
+                String.format("%s DESC", DatabaseHelper.KEY_HISTORY_DATE),
                 null); //  + " DESC"
     }
 

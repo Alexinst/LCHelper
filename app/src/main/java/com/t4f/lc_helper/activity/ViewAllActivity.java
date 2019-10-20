@@ -70,7 +70,9 @@ public class ViewAllActivity extends AppCompatActivity {
                 null,
                 null,
                 null,
-                DatabaseHelper.KEY_COMMAND_TITLE);
+                DatabaseHelper.KEY_COMMAND_TITLE,
+                null
+        );
         adapter = new MyRecyclerViewAdapter(this, cursor);
 //        db.close();
 
