@@ -33,30 +33,18 @@ public class ViewAllActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // 启用向上导航
-//        Tools.setHomeAsUp(this, toolbar);
-        setHomeAsUp(toolbar);
+        Tools.setHomeAsUp(this, toolbar);
+//        setHomeAsUp(toolbar);
 
         recyclerAll = findViewById(R.id.recycler_all);
-         setAdapter();
+        setAdapter();
 
 
         // 设置 LinearLayout
         setLinearLayout();
-//
+
 //        // 设置 recyclerAll 的响应事件
         setOnItemClickListener();
-    }
-
-    private void setHomeAsUp(Toolbar toolbar) {
-        if (toolbar != null) {
-            toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NavUtils.navigateUpFromSameTask(ViewAllActivity.this);
-                }
-            });
-        }
     }
 
     private void setAdapter() {
