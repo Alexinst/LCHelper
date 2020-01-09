@@ -1,5 +1,6 @@
 package com.t4f.lc_helper.activity;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,11 +19,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
-import com.t4f.lc_helper.utils.Tools;
 import com.t4f.lc_helper.utils.Info;
 import com.t4f.lc_helper.utils.JsonDataReader;
 import com.t4f.lc_helper.R;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity
 //        runAtFirst();
 
         // 读取data.json
-        Map<String, Info> cmds = Tools.readData(this, "CmdInfo.json");
+        Map<String, Info> cmds = readData("CmdInfo.json");
 
 //        // ToTest: 创建前缀树，储存所有指令名
 //        Trie cmdTree = new Trie();
@@ -77,42 +79,19 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Not First Run", Toast.LENGTH_LONG).show();
     }
 
-    private void topK() {
-//        searchBox.addTextChangedListener(new TextWatcher() {
-////            private CharSequence temp;
-////            private int selectionStart;
-////            private int selectionEnd;
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                StringBuilder str = new StringBuilder();
-//                for (int i = 0; i < s.length(); i++) {
-//                    char c = s.charAt(i);
-//                    if (   (c - 'a' >= 0 && c - 'a' < 26)
-//                        || (c - '0' >= 0 && c - '0' < 10)
-//                        || c == '-'
-//                        || c == '_')
-//                        str.append(c);
-//                }
-//
-//                List<String> suggessions = new ArrayList<>();
-//                suggessions.add(cmds.get(str).getTitle());
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                        android.R.layout.simple_list_item_1, suggessions);
-//                suggessionsPop.setAdapter(adapter);
-//
-//
-//                // Top K algorithm
-//            }
-//        });
+    private  Map<String, Info> readData(String filename) {
+//        String filename = "CmdInfo.json";
+        JsonDataReader dataReader = new JsonDataReader();
+        Map<String, Info> cmds = null;
+
+        try {
+            InputStream in = getResources().getAssets().open(filename);
+            cmds = dataReader.readJsonStream(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return cmds;
     }
 
     public void onClickSearch(View view) {

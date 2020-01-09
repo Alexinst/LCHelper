@@ -18,20 +18,7 @@ import java.util.Map;
 public class Tools {
     public static final String language = "zh";
 
-    public static Map<String, Info> readData(Context context, String filename) {
-//        String filename = "CmdInfo.json";
-        JsonDataReader dataReader = new JsonDataReader();
-        Map<String, Info> cmds = null;
 
-        try {
-            InputStream in = context.getResources().getAssets().open(filename);
-            cmds = dataReader.readJsonStream(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return cmds;
-    }
 
     public static void setHomeAsUp(final Activity activity, Toolbar toolbar) {
         if (toolbar != null) {
