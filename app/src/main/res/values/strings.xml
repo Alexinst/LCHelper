@@ -3,15 +3,12 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Linux Command Helper</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <!-- main activity -->
     <string name="menu_home">首页</string>
     <string name="menu_history">历史记录</string>
     <string name="menu_view_all">全部命令</string>
-    <string name="menu_settings">设置</string>
     <!--<string name="menu_share">Share</string>-->
     <!--<string name="menu_send">Send</string>-->
 
@@ -20,7 +17,6 @@
 
     <!-- history activity -->
     <string name="label_history">查询历史</string>
-    <string name="menu_home_as_up">返回</string>
     <string name="menu_delete">清空历史记录</string>
 
     <!-- search result activity -->
